@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WebGL - Interactive volume visualization of vector field</title>
+	</head>
+	<style>
+	
+		html{
+			font-size: 1em;
+			line-height: 1.3em;
+			min-width: 300px;
+			overflow-y: scroll;
+    		-webkit-text-size-adjust: 100%;
+		}
+		body{
+			position: relative;
+			margin: 0;
+			padding: 0 150px 0 160px;
+			background: #fff;
+			font-family: 'Ubuntu Mono','Monaco','Lucida Sans Typewriter','monospace';
+			font-weight: 400;
+			font-size: 16px;
+			color: #1d2021;
+			text-rendering: optimizeLegibility;
+		}
+
+		header {
+			margin: 0.2em 0 3em 0;
+			display: block;
+		}
+
+		header h1{
+			margin: 0;
+			font-weight: bold;
+			border: 0;
+		}
+
+		header h2 {
+			margin: 0;
+			border: 0;
+		}
+
+		h1 {
+			font-size: 2.5em;
+		}
+
+		h2 {
+			font-size: 1.4em;
+		}
+		section {
+			margin: 3em 0;
+    		margin: 2.8em 0;
+			display: block;
+		}
+		 
+		main {
+			position: relative;
+			margin: 0 auto;
+			padding: 8px 32px 80px;
+			max-width: 920px;
+			min-height: 920px;
+			background: #fff;
+			display: block;
+		}
+
+		p{
+			line-height: 1.4em;
+    		margin: 1.4em 0;
+			text-align: justify;
+			text-justify: inter-word;
+		}
+
+		strong {
+			color: #32302f;
+			font-weight: bold;
+		}
+
+		canvas {
+			width: 100%;
+			height: 400px;
+		}
+
+		.arrow {
+			margin-left: -13px;
+			
+		}
+		.arrow::before {
+			content: "→";
+			position:  relative;
+			top: -11px;
+			left: 13px;
+		}
+
+		pre {
+			margin: 1.4em / 2 0;
+			padding: 0.5em 0.8em;
+			line-height: 1.4em;
+			border-left: 2px solid rgba(0,0,0,0.3);
+			border-radius: 0 8px 8px 0;
+			overflow: auto;
+			background: rgba(0,0,0,0.05);
+		}
+
+		.badge {
+			font-size: 14px;
+			letter-spacing: .6px;
+			font-weight: normal;
+			margin: 0 16px 6px 0;
+			padding: 4px 0;
+			white-space: nowrap;
+		}
+
+		.badges .key {
+			text-transform: uppercase;
+			font-size: 11px;
+			color: #1d2021;
+			padding: 0 4px 0 0;
+		}
+	</style>
+	<body onload="InitDemo();">
+		<main>
+			<section>
+				<header>
+					<h1>CHPS0941 IHPV REPORT</h1>
+					<p></p>
+					<h2>Interactive volume visualization of vector field</h2>
+					<p>Project made by HOLLARD Lilian</p>
+				</header>
+				<canvas id="vector_surface">
+					Your browser does not support HTML5
+				</canvas>
+			</section>
+			<section>
+				<h2>>_ Context</h2>
+				<p>
+					The proposed projects are an extension of the course. Each project is intended to provide an overview of the state of progress on a specific research topic and proposes a set of resources (papers, books, ...) as a starting point.
+				</p>
+				<strong>>_ Project 4 - Interactive volume visualization of vector fields</strong>
+				<p>
+					Vector fields are commonly used in science and engineering to represent physical phenomena such as fluid flow, electromagnetic or acoustic fields, or the behaviour of dynamic systems. One way to understand these phenomena is to generate visual representations of vector fields to reveal their directional information, the position of critical points and their temporal evolution. The objective of this project is to study the implementation of such an algorithm on volumetric data with a possible application on biological spatio-temporal data. In particular, you will be interested in the study of algorithms of the LIC and streamlines type. 
+				</p>
+			</section>
+			<hr>
+			<section>
+				<h2>>_ Introduction</h2>
+				<p></p>
+				<p>
+					This project was made using <strong>OpenGL/WebGL</strong> and mainly using <strong>GLSL</strong> for the drawings as well as the calculation of the vector fields. 
+					This choice of development method will be explained during the report.
+					<br>
+					To begin, we will defined and describe how this project can be solved "by hand" to better understand vector / function calculations.
+					We will then describe the solution chosen to use this method on a computer.
+					Then we will describe the development methods and algorithms used. 
+				</p>
+			</section>
+			<section>
+				<h2>
+					>_ Definition
+				</h2>
+				<p></p>
+				<p>We can define our vector field as a fonction <a class="arrow">F</a> : R<sup>n</sup> -> R<sup>n</sup> with an input domain where every point in space will get you an associate output.</p>
+				<p>In two dimension, our fonction <a class="arrow">F</a> is gonna have a two dimensional output.</p> 
+				<p>In other words, our <a class="arrow">F</a> fonction can be decomposed into two component (where M and N are two function of xy) :</p> 
+				<p><a class="arrow">F</a>(x,y) = M(x,y) i + N(x,y) j</p>
+				<p></p>
+				<strong>
+					>_ Graphing by hand
+				</strong>
+				<p>
+					To understand how it works, we can imagine "by hand", for a single value of x and a single value of y, how to draw a vector according to a function <a class="arrow">F</a>.
+					Imagine M(x,y) and N(x,y) return <a class="arrow">F</a> = y i - x j, we would then have the following results:
+				 </p>
+				 <b><a class="arrow">F</a>(0, 0) = (0, 0)</b>
+				 <br>
+				 <b><a class="arrow">F</a>(1, 0) = (-1, 0) </b>
+				 <p>Which translates into drawing by this : </p> 
+				 <figure>
+					<img src="images/vector_byhand.png"
+						 alt="Vector drawing by hand"
+						 width="800"
+						 height="600">
+					
+					<figcaption class="badge">Figure 1 : Vector field drawing by hand</figcaption>
+				 <h2>
+					 >_ Using a computer
+				 </h2>
+				 <p>To transmit this method on computer, the choice of the use of GLSL appeared following a programming error. I had initially used Three.js, a 3d development library using WebGL to create a prototype.
+					But I didn't manage the size of the vectors and I couldn't get an algorithm that could simulate different values of x and y in a correct and optimized way to work properly. 
+				</p>
+				<figure>
+					<img src="images/VectorFieldFail1.png"
+						 alt="VectorField Fail"
+						 width="800"
+						 height="400">
+				  
+					<figcaption class="badge">Figure 2: Vector field visualisation with incorect M & N Function</figcaption>
+				  </figure>
+				  <figure>
+					<img src="images/VectorFieldFail2.png"
+						 alt="VectorField Fail"
+						 width="800"
+						 height="400">
+				  
+					<figcaption class="badge">Figure 3 : Vector field visualisation with more density</figcaption>
+				  </figure>
+
+				  <p>The second image makes it possible to better visualize with more density the path traveled by the vectors despite the vector size error.</p>
+
+				  <p>
+					From this first code prototype, the idea came to me to use shaders to simply visualize any type of values that x and y could have, 
+					since the very principle of a shader, more particularly the Fragment Shader is to go through each pixel of the rasterized geometry several times per second thus representing x and y. 
+				  </p>
+				  <hr>
+				  <br>
+				  <strong> >_OpenGL context & GLSL</strong>
+				  <p></p>
+				  <p>The WebGL code is a simple code creating a rectangle geometry in an html canvas on which we will draw using a fragment shader. </p>
+				  <pre><code><strong>WebGL js </strong>
+/*PSEUDO CODE*/
+<strong>//BUFFER</strong>
+gl.createBuffer();
+gl.bindBuffer();
+<strong>//Creation du rectangle</strong>
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+		x1, y1,
+		x2, y1,
+		x1, y2,
+		x1, y2,
+		x2, y1,
+		x2, y2,
+]), gl.STATIC_DRAW);
+
+<strong>//VAO</strong>
+VAO = gl.createVertexArray();
+gl.bindVertexArray(VAO);
+
+gl.vertexAttribPointer(...);
+
+<strong>//Uniform value for vertex & fragment shaders</strong>
+gl.uniform2f(...);
+
+<strong>//Draw</strong>
+gl.drawArrays(...);
+				</code></pre>
+				<p>Ressources:</p>
+				<a class="badge">Learn OpenGL, extensive tutorial resource for learning Modern OpenGL. https://learnopengl.com/.</a>
+				<br>
+				<a class="badge">WebGL2 Fundamentals. https://webgl2fundamentals.org.</a>
+				<br>
+				<br>
+				<strong>Fragment Shader</strong>
+				<p>The fragment shader is mainly composed of 2 functions, one allowing the drawing of an arrow inspired by 2 tutorials found on the net (source at the end of the chapter) as well as a function corresponding to the vector fields</p>
+				<p>Description of the shader:
+					First, we call a function returning a float value from 2 parameters: The x,y coordinates of gl_FragCoord as well as the vector field, represented by a 2-dimensional vector.
+					This second parameter is calculated according to the chosen density as well as the central pixel of the tile corresponding to the current position x, y.
+					As a result, we will obtain arrows/vectors centered on a single point for a certain value of x,y and with a size corresponding to the tile. 
+				</p>
+				<p>
+					Once the distance of the vector has been calculated since it varies over time thanks to a uniform Time variable, we can draw the vector via the fragment shader as well
+					as the background value thanks to the <strong>clamp</strong> functions (to keep the arrow at inside the tile) and <strong>mix</strong> (to mix the color of the arrow corresponding to the drawing of the arrow and the screen background). 
+				</p>
+				<a class="badge">
+					>_ How to draw lines in WebGL : </a>
+				<a class="badge">https://www.khronos.org/assets/uploads/developers/presentations/Crazy_Panda_How_to_draw_lines_in_WebGL.pdf</a>
+				<br>
+				<a class="badge">>_ Arrow chapter :</a> <br>
+				<a class="badge">(starting page 25) https://jcgt.org/published/0003/04/01/paper.pdf</a>
+				<br>
+				<hr>
+				<br>
+				<strong>
+					>_ Draw "by hand" example with a computer
+				</strong>
+				<p>
+					Function : <a class="arrow">F</a> = 1 i , 0 j
+				</p>
+				<p></p>
+				<canvas id="vector_surface_simple">
+					Your browser does not support HTML5
+				</canvas>
+				<p></p>
+				<p>
+					We can observe that the shader draws for each rasterized pixel of the geometry using the decided function for the vector field.
+					Each "tile" is respected so that the vectors do not overlap. 
+				</p>
+				<br>
+				<strong>>_ More example</strong>
+				<br>
+				<br>
+				<a class="arrow">F</a> = cos(x * 0.01 + y * 0.01 + time), sin(y * 0.01 * cos(x *0.01 + time))
+				<br>
+				<canvas id="vector_surface_xy">
+					Your browser does not support HTML5
+				</canvas>
+			</section>
+		</main>
+		<script src="utils.js"></script>
+		<script src="webgl.js"></script>
+	</body>
+</html>
