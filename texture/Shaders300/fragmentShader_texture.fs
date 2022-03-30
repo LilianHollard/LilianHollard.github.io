@@ -51,7 +51,6 @@ float arrow(vec2 p, vec2 vector_field) {
 // Vector field : créer sa propre fonction.
 vec2 field(vec2 pos) {
 	//return vec2(1.0, 0.0);
-	//return 2.0 * texture(u_texture, mod(pos, 2.0 * iChannelResolution[1].xy) * 0.5 / iChannelResolution[1].xy).xy - 1.0;
 	return vec2(cos(pos.x * 0.01 + pos.y * 0.01) + cos(pos.y * 0.005 + time), 2.0 * cos(pos.y * 0.01  + time * 0.3)) * 0.5;
 
 	//return vec2(cos(pos.x * 0.017 + cos(pos.y * 0.004 + time * 0.1) * 6.28 * 4.0) * 3.0, cos(6.28 * cos(pos.y * 0.01 + pos.x * 0.007)));
