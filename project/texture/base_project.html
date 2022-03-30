@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WebGL - Interactive volume visualization of vector field</title>
+	</head>
+	<style>
+	
+		html{
+			font-size: 1em;
+			line-height: 1.3em;
+			min-width: 300px;
+			overflow-y: scroll;
+    		-webkit-text-size-adjust: 100%;
+		}
+		body{
+			position: relative;
+			margin: 0;
+			padding: 0 150px 0 160px;
+			background: #fff;
+			font-family: 'Ubuntu Mono','Monaco','Lucida Sans Typewriter','monospace';
+			font-weight: 400;
+			font-size: 18px;
+			color: #1d2021;
+			text-rendering: optimizeLegibility;
+		}
+
+		header {
+			margin: 0.2em 0 3em 0;
+			display: block;
+		}
+
+		header h1{
+			margin: 0;
+			font-weight: bold;
+			border: 0;
+		}
+
+		header h2 {
+			margin: 0;
+			border: 0;
+		}
+
+		h1 {
+			font-size: 2.5em;
+		}
+
+		h2 {
+			font-size: 1.4em;
+		}
+		section {
+			margin: 3em 0;
+    		margin: 2.8em 0;
+			display: block;
+		}
+		 
+		main {
+			position: relative;
+			margin: 0 auto;
+			padding: 8px 32px 80px;
+			max-width: 920px;
+			min-height: 920px;
+			background: #fff;
+			display: block;
+		}
+
+		p{
+			line-height: 1.4em;
+    		margin: 1.4em 0;
+			text-align: justify;
+			text-justify: inter-word;
+		}
+
+		strong {
+			color: #32302f;
+			font-weight: bold;
+		}
+
+		canvas {
+			width: 100%;
+			height: 400px;
+		}
+
+	</style>
+    <body onload="InitDemo();">
+        <main>
+            <section>
+                <header>
+                    <h1>CHPS0941 IHPV</h1>
+                    <p></p>
+                    <h2>Interactive volume visualization of vector field - Texture</h2>
+                    <p>Project made by HOLLARD Lilian</p>
+                </header>
+                <canvas id="vector_surface_texture">
+                    Your browser does not support HTML5
+                </canvas>
+            </section>
+        </main>
+    </body>
+	<script src="loader.js"></script>
+    <script src="utils_texture.js"></script>
+	<script src="webgl_texture.js"></script>
+</html>

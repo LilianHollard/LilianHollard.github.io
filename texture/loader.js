@@ -29,12 +29,6 @@ var loadTextResource = function (url, callback) {
 
 var load_Shader = function (gl, vertexPath, fragmentPath){
 
- /* var image = new Image();
-    image.src = "https://LilianHollard.github.io/images/water.png";
-    image.onload = function(){
-        render(image);
-    }
-*/
     if (!gl) {
         console.log('WebGL 2 not supported, falling back on webgl 1');
         gl = canvas.getContext('webgl');
@@ -53,9 +47,9 @@ var load_Shader = function (gl, vertexPath, fragmentPath){
                             alert('Fatal error getting fragment shader (see console)');
                             console.error(fsErr);
                         }else{
-                            loadImage('images/water.jpg', function (imgErr, img) {
+                            loadImage('water.jpg', function (imgErr, img) {
                                 if (imgErr) {
-                                    alert('Fatal error getting Susan texture (see console)');
+                                    alert('Fatal error getting Water texture (see console)');
                                     console.error(imgErr);
                                 } else { 
                                     RunWebglContext(vsText, fsText, gl, img);
@@ -79,9 +73,9 @@ var load_Shader = function (gl, vertexPath, fragmentPath){
                         alert('Fatal error getting fragment shader (see console)');
                         console.error(fsErr);
                     }else{
-                        loadImage('images/water.jpg', function (imgErr, img) {
+                        loadImage('water.jpg', function (imgErr, img) {
                             if (imgErr) {
-                                alert('Fatal error getting Susan texture (see console)');
+                                alert('Fatal error getting Susan Water (see console)');
                                 console.error(imgErr);
                             } else { 
                                 RunWebglContext(vsText, fsText, gl, img);
@@ -93,42 +87,4 @@ var load_Shader = function (gl, vertexPath, fragmentPath){
         });
 
     }
-}
-
-/*
-Shaders loader
-*/
-var InitDemo = function () {
-    //WEBGL CONTEXT
-    /*
-    New: Webgl1 Support
-        - le projet se basant uniquement sur l'utilisation de shader, il existe 2 version permettant ainsi d'avoir la version 3.00 glsl es et 1.00
-        - La différence varie entre l'utilisation de in & out / varying & attribute / gl_FragCoord ...
-    */
-
-    var canvas = document.getElementById('vector_surface');
-    canvas.width = 1200;
-    canvas.height = 600;
-    var gl = canvas.getContext('webgl2'); 	
-    load_Shader(gl, "Shaders300/vertexShader.vs", "Shaders300/fragmentShader.fs");
-
-    var canvas = document.getElementById('vector_surface_simple');
-    canvas.width = 1200;
-    canvas.height = 600;
-    gl = canvas.getContext('webgl2');
-    load_Shader(gl, "Shaders300/vertexShader.vs", "Shaders300/fragmentShader_simple.fs");
-
-    var canvas = document.getElementById('vector_surface_xy');
-    canvas.width = 1200;
-    canvas.height = 600;
-    gl = canvas.getContext('webgl2');
-    load_Shader(gl,"Shaders300/vertexShader.vs", "Shaders300/fragmentShader_simple_xy.fs");
-
-    var canvas = document.getElementById('vector_surface_texture');
-    canvas.width = 1200;
-    canvas.height = 600;
-    var gl = canvas.getContext('webgl2');
-    load_Shader(gl, "Shaders300/vertexShader_texture.vs", "Shaders300/fragmentShader_texture.fs");
-    // In & out sont utilisé dans les shaders, nous avons besoin de webgl2 pour la version 3.00 de glsl es
-
 }

@@ -1,4 +1,4 @@
-var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl) {
+var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl, image) {
 	
 
 	gl.clearColor(0.75, 0.85, 0.8, 1.0);
@@ -77,8 +77,54 @@ var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl) {
 	var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
 	var offset = 0;        // start at the beginning of the buffer
 
+
+	gl.vertexAttribPointer(
+		positionAttribLocation, // Attribute location
+		2, // Number of elements per attribute
+		gl.FLOAT, // Type of elements
+		gl.FALSE,
+		5 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
+		0 // Offset from the beginning of a single vertex to this attribute
+	);
+
+	gl.enableVertexAttribArray(positionAttribLocation);
+    
+
+	gl.vertexAttribPointer(positionAttribLocation, size, type, normalize, stride, offset);
+	
+	//
+	// Main render loop
+	//
+	gl.useProgram(program);
+
+	gl.bindVertexArray(VAO);
+
+	gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
+	gl.uniform2f(gl.getUniformLocation(program, "fragCoord"), gl.canvas.width, gl.canvas.height);
+
+
+	var primitiveType = gl.TRIANGLES;
+	var offset = 0;
+	var count = 6;
+	const timeLocation = gl.getUniformLocation(program, "time");
+	function render(time) {
+		
+		gl.useProgram(program);
+		gl.uniform1f(timeLocation, time * 0.001);  // time in seconds
+	
+		// draw
+		gl.drawArrays(primitiveType, offset, count);
+		requestAnimationFrame(render);
+	  }
+	  requestAnimationFrame(render);
+
+};
+
+
+/*
 	/////////////////////////////////////////
-	/*var texcoordAttributeLocation = gl.getAttribLocation(program, "a_texcoord");
+	var texcoordAttributeLocation = gl.getAttribLocation(program, "a_texcoord");
+	
 	var texLocation = gl.getUniformLocation(program, "u_texture");
 	var texcoordBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, texcoordBuffer);
@@ -90,7 +136,7 @@ var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl) {
 		1.0, 0.0,
 		1.0, 1.0
 	]), gl.STATIC_DRAW);
-	gl.vertexAttribPointer(texcoordAttributeLocation, size, type, normalize, stride, offset);
+	gl.vertexAttribPointer(positionAttribLocation, size, type, normalize, stride, offset);
 
 
 	var texture = gl.createTexture();
@@ -113,55 +159,13 @@ var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl) {
 				  internalFormat,
 				  srcFormat,
 				  srcType,
-				  image);*/
+				  image);
 	//////////////////////////////////////////
 
-
-	gl.vertexAttribPointer(
-		positionAttribLocation, // Attribute location
-		2, // Number of elements per attribute
-		gl.FLOAT, // Type of elements
-		gl.FALSE,
-		5 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
-		0 // Offset from the beginning of a single vertex to this attribute
-	);
-
-	gl.enableVertexAttribArray(positionAttribLocation);
-    
-
-	gl.vertexAttribPointer(positionAttribLocation, size, type, normalize, stride, offset);
-
-	//
-	// Main render loop
-	//
-	gl.useProgram(program);
-
-	gl.bindVertexArray(VAO);
-
-	gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
-	gl.uniform2f(gl.getUniformLocation(program, "fragCoord"), gl.canvas.width, gl.canvas.height);
-
-
 	//////////////////////////////////////
-	//gl.uniform1i(texLocation, 0);
-	//gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
-	//////////////////////////////////////
-
-
-	var primitiveType = gl.TRIANGLES;
-	var offset = 0;
-	var count = 6;
-	const timeLocation = gl.getUniformLocation(program, "time");
-	function render(time) {
-		
-		gl.useProgram(program);
-		gl.uniform1f(timeLocation, time * 0.001);  // time in seconds
+	gl.uniform1i(texLocation, 0);
+	gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+	setRectangle(gl, 0, 0, image.width, image.height);
 	
-		// draw
-		gl.drawArrays(primitiveType, offset, count);
-		requestAnimationFrame(render);
-	  }
-	  requestAnimationFrame(render);
-
-};
+	//////////////////////////////////////
+*/
