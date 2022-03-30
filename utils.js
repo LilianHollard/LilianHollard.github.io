@@ -78,6 +78,12 @@ var InitDemo = function () {
         - le projet se basant uniquement sur l'utilisation de shader, il existe 2 version permettant ainsi d'avoir la version 3.00 glsl es et 1.00
         - La différence varie entre l'utilisation de in & out / varying & attribute / gl_FragCoord ...
     */
+    var image = new Image();
+    image.src = "https://LilianHollard.github.io/images/water.png";
+    image.onload = function(){
+        render(image);
+    }
+
     var canvas = document.getElementById('vector_surface');
     canvas.width = 1200;
     canvas.height = 600;
@@ -87,14 +93,20 @@ var InitDemo = function () {
     var canvas = document.getElementById('vector_surface_simple');
     canvas.width = 1200;
     canvas.height = 600;
-    var gl2 = canvas.getContext('webgl2');
-    load_Shader(gl2, "Shaders300/fragmentShader_simple.fs");
+    gl = canvas.getContext('webgl2');
+    load_Shader(gl, "Shaders300/fragmentShader_simple.fs");
 
     var canvas = document.getElementById('vector_surface_xy');
     canvas.width = 1200;
     canvas.height = 600;
-    var gl2 = canvas.getContext('webgl2');
-    load_Shader(gl2, "Shaders300/fragmentShader_simple_xy.fs");
+    gl = canvas.getContext('webgl2');
+    load_Shader(gl, "Shaders300/fragmentShader_simple_xy.fs");
+
+    var canvas = document.getElementById('vector_surface_texture');
+    canvas.width = 1200;
+    canvas.height = 600;
+    var gl = canvas.getContext('webgl2');
+    load_Shader(gl, "Shaders300/fragmentShader_texture.fs");
     // In & out sont utilisé dans les shaders, nous avons besoin de webgl2 pour la version 3.00 de glsl es
 
 }
