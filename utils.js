@@ -23,12 +23,12 @@ var loadTextResource = function (url, callback) {
 
 var load_Shader = function (gl, fragmentPath){
 
-    var image = new Image();
+ /* var image = new Image();
     image.src = "https://LilianHollard.github.io/images/water.png";
     image.onload = function(){
         render(image);
     }
-
+*/
     if (!gl) {
         console.log('WebGL 2 not supported, falling back on webgl 1');
         gl = canvas.getContext('webgl');
@@ -47,7 +47,7 @@ var load_Shader = function (gl, fragmentPath){
                             alert('Fatal error getting fragment shader (see console)');
                             console.error(fsErr);
                         }else{
-                            RunWebglContext(vsText, fsText, gl, image);
+                            RunWebglContext(vsText, fsText, gl);
                         }
                     });
                 } 

@@ -1,4 +1,4 @@
-var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl, image) {
+var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl) {
 	
 
 	gl.clearColor(0.75, 0.85, 0.8, 1.0);
@@ -78,7 +78,7 @@ var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl, image)
 	var offset = 0;        // start at the beginning of the buffer
 
 	/////////////////////////////////////////
-	var texcoordAttributeLocation = gl.getAttribLocation(program, "a_texcoord");
+	/*var texcoordAttributeLocation = gl.getAttribLocation(program, "a_texcoord");
 	var texLocation = gl.getUniformLocation(program, "u_texture");
 	var texcoordBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, texcoordBuffer);
@@ -113,7 +113,7 @@ var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl, image)
 				  internalFormat,
 				  srcFormat,
 				  srcType,
-				  image);
+				  image);*/
 	//////////////////////////////////////////
 
 
@@ -143,7 +143,7 @@ var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl, image)
 
 
 	//////////////////////////////////////
-	gl.uniform1i(texLocation, 0);
+	//gl.uniform1i(texLocation, 0);
 	//gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
 	//////////////////////////////////////
