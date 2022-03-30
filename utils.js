@@ -22,6 +22,13 @@ var loadTextResource = function (url, callback) {
 };
 
 var load_Shader = function (gl, fragmentPath){
+
+    var image = new Image();
+    image.src = "https://LilianHollard.github.io/images/water.png";
+    image.onload = function(){
+        render(image);
+    }
+
     if (!gl) {
         console.log('WebGL 2 not supported, falling back on webgl 1');
         gl = canvas.getContext('webgl');
@@ -40,7 +47,7 @@ var load_Shader = function (gl, fragmentPath){
                             alert('Fatal error getting fragment shader (see console)');
                             console.error(fsErr);
                         }else{
-                            RunWebglContext(vsText, fsText, gl);
+                            RunWebglContext(vsText, fsText, gl, image);
                         }
                     });
                 } 
@@ -78,11 +85,6 @@ var InitDemo = function () {
         - le projet se basant uniquement sur l'utilisation de shader, il existe 2 version permettant ainsi d'avoir la version 3.00 glsl es et 1.00
         - La différence varie entre l'utilisation de in & out / varying & attribute / gl_FragCoord ...
     */
-    var image = new Image();
-    image.src = "https://LilianHollard.github.io/images/water.png";
-    image.onload = function(){
-        render(image);
-    }
 
     var canvas = document.getElementById('vector_surface');
     canvas.width = 1200;

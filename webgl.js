@@ -1,4 +1,4 @@
-var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl) {
+var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl, image) {
 	
 
 	gl.clearColor(0.75, 0.85, 0.8, 1.0);
