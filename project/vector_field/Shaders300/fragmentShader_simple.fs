@@ -1,11 +1,13 @@
-#version 100
+#version 300 es
 
 precision highp float;
 
+out vec4 fragColor;
 uniform float time;
 
 const float density = 35.0;
 
+// Center pixel of the tile
 vec2 arrowTileCenterCoord(vec2 pos) {
 	return (floor(pos / density) + 0.5) * density;
 }
@@ -41,10 +43,7 @@ float arrow(vec2 p, vec2 vector_field) {
 
 // Vector field : créer sa propre fonction.
 vec2 field(vec2 pos) {
-	//return vec2(1.0, 0.0);
-	return vec2(cos(pos.x * 0.01 + pos.y * 0.01) + cos(pos.y * 0.005 + time), 2.0 * cos(pos.y * 0.01  + time * 0.3)) * 0.5;
-
-	//return vec2(cos(pos.x * 0.017 + cos(pos.y * 0.004 + time * 0.1) * 6.28 * 4.0) * 3.0, cos(6.28 * cos(pos.y * 0.01 + pos.x * 0.007)));
+	return vec2(cos(sin(pos.x) * 0.01 + sin(pos.y) * 0.01+ time), sin(cos(pos.y) * 0.01 * cos(sin(pos.x) *0.01+ time)));
 }
 
 
@@ -60,5 +59,6 @@ void main() {
 	//background color
 	vec4 field_col = vec4(field(gl_FragCoord.xy) * 0.5 + 0.5, 0.5, 1.0);
 	
-	gl_FragColor = mix(-arrow_col, field_col, arrow_col.a);
+	fragColor = mix(-arrow_col, field_col, arrow_col.a);
 }
+

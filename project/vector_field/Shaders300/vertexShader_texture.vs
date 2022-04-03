@@ -1,9 +1,13 @@
-#version 100
+#version 300 es
 //Inspiré des cours de : webgl2 fundamental https://webgl2fundamentals.org/
 //https://webgl2fundamentals.org/webgl/lessons/webgl-fundamentals.html
 
-attribute vec2 vertPosition;
+in vec2 vertPosition;
+
+
 uniform vec2 u_resolution;
+
+out vec2 v_texcoord;
 
 void main(){
     vec2 zeroToOne = vertPosition / u_resolution;
@@ -14,4 +18,7 @@ void main(){
     // convert from 0->2 to -1->+1 (clipspace)
     vec2 clipSpace = zeroToTwo - 1.0;
     gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+
+    v_texcoord = gl_Position.xy;
+;
 }

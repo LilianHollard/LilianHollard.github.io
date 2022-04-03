@@ -124,11 +124,6 @@ var InitDemo = function () {
     gl = canvas.getContext('webgl2');
     load_Shader(gl,"Shaders300/vertexShader.vs", "Shaders300/fragmentShader_simple_xy.fs");
 
-    var canvas = document.getElementById('vector_surface_texture');
-    canvas.width = 1200;
-    canvas.height = 600;
-    var gl = canvas.getContext('webgl2');
-    load_Shader(gl, "Shaders300/vertexShader_texture.vs", "Shaders300/fragmentShader_texture.fs");
     // In & out sont utilisé dans les shaders, nous avons besoin de webgl2 pour la version 3.00 de glsl es
 
 }

@@ -2,10 +2,16 @@
 
 precision highp float;
 
+in vec2 v_texcoord;
+
 out vec4 fragColor;
+
 uniform float time;
+uniform vec2 u_resolution;
+uniform sampler2D u_texture;
 
 const float density = 35.0;
+
 
 // Center pixel of the tile
 vec2 arrowTileCenterCoord(vec2 pos) {
@@ -46,9 +52,27 @@ vec2 field(vec2 pos) {
 	return vec2(cos(pos.x * 0.01 + pos.y * 0.01) + cos(pos.y * 0.005 + time), 2.0 * cos(pos.y * 0.01  + time * 0.3)) * 0.5;
 }
 
+vec4 blur(sampler2D img, vec2 uv, vec2 resolution, vec2 direction){
+    vec4 color = vec4(0.0);
+    vec2 off1 = vec2(1.3333333333333333)* direction;
+    color += texture(img, uv).rgba* 0.29411764705882354;
+    color += textureLod(img, uv + (off1 / resolution), 3.) * 0.35294117647058826;
+    color += textureLod(img, uv - (off1 / resolution), 3.) * 0.35294117647058826;
+    return color;
+}
+
 
 void main() {
-	
+	/*
+	vec2 field = field(arrowTileCenterCoord(fragCoord.xy)) * res * ARROW_TILE_SIZE * 0.4;
+	vec2 uv = fragCoord.xy / u_resolution.xy; //uniform value : vec2 width height
+
+	vec4 blur_texture = blur(u_texture, uv, u_resolution.xy, field);
+	fragColor = blur_texture;
+	*/
+
+
+
 	float arrow_dist = arrow(gl_FragCoord.xy,
 							// size of the arrow inside the tile (modify the float value at the end to increase or decrease the size)
 							field(arrowTileCenterCoord(gl_FragCoord.xy)) * density * 0.35);

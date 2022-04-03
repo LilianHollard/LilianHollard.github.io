@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>WebGL - Interactive volume visualization of vector field</title>
+		<title>WebGL - Interactive volume visualization of vector fields</title>
 	</head>
 	<style>
 	
@@ -123,7 +123,7 @@
 				<header>
 					<h1>CHPS0941 IHPV REPORT</h1>
 					<p></p>
-					<h2>Interactive volume visualization of vector field</h2>
+					<h2>Interactive volume visualization of vector fields</h2>
 					<p>Project made by HOLLARD Lilian</p>
 				</header>
 				<strong><a href="texture/base_project.html">>_ Skip to Part 2 - Texture</a></strong>
@@ -161,7 +161,7 @@
 					>_ Definition
 				</h2>
 				<p></p>
-				<p>We can define our vector field as a fonction <a class="arrow">F</a> : R<sup>n</sup> -> R<sup>n</sup> with an input domain where every point in space will get you an associate output.</p>
+				<p>We can define our vector fields as a fonction <a class="arrow">F</a> : R<sup>n</sup> -> R<sup>n</sup> with an input domain where every point in space will get you an associate output.</p>
 				<p>In two dimension, our fonction <a class="arrow">F</a> is gonna have a two dimensional output.</p> 
 				<p>In other words, our <a class="arrow">F</a> fonction can be decomposed into two component (where M and N are two function of xy) :</p> 
 				<p><a class="arrow">F</a>(x,y) = M(x,y) i + N(x,y) j</p>
@@ -175,7 +175,7 @@
 				 </p>
 				 <b><a class="arrow">F</a>(0, 0) = (0, 0)</b>
 				 <br>
-				 <b><a class="arrow">F</a>(1, 0) = (-1, 0) </b>
+				 <b><a class="arrow">F</a>(1, 0) = (0, -1) </b>
 				 <p>Which translates into drawing by this : </p> 
 				 <figure>
 					<img src="images/vector_byhand.png"
@@ -183,7 +183,7 @@
 						 width="800"
 						 height="600">
 					
-					<figcaption class="badge">Figure 1 : Vector field drawing by hand</figcaption>
+					<figcaption class="badge">Figure 1 : Vector fields drawing by hand</figcaption>
 				 <h2>
 					 >_ Using a computer
 				 </h2>
@@ -196,7 +196,7 @@
 						 width="800"
 						 height="400">
 				  
-					<figcaption class="badge">Figure 2: Vector field visualisation with incorect M & N Function</figcaption>
+					<figcaption class="badge">Figure 2: Vector fields visualisation with incorect M & N Function</figcaption>
 				  </figure>
 				  <figure>
 					<img src="images/VectorFieldFail2.png"
@@ -204,7 +204,7 @@
 						 width="800"
 						 height="400">
 				  
-					<figcaption class="badge">Figure 3 : Vector field visualisation with more density</figcaption>
+					<figcaption class="badge">Figure 3 : Vector fields visualisation with more density</figcaption>
 				  </figure>
 
 				  <p>The second image makes it possible to better visualize with more density the path traveled by the vectors despite the vector size error.</p>
@@ -254,7 +254,7 @@ gl.drawArrays(...);
 				<strong>Fragment Shader</strong>
 				<p>The fragment shader is mainly composed of 2 functions, one allowing the drawing of an arrow inspired by 2 tutorials found on the net (source at the end of the chapter) as well as a function corresponding to the vector fields</p>
 				<p>Description of the shader:
-					First, we call a function returning a float value from 2 parameters: The x,y coordinates of gl_FragCoord as well as the vector field, represented by a 2-dimensional vector.
+					First, we call a function returning a float value from 2 parameters: The x,y coordinates of gl_FragCoord as well as the vector fields, represented by a 2-dimensional vector.
 					This second parameter is calculated according to the chosen density as well as the central pixel of the tile corresponding to the current position x, y.
 					As a result, we will obtain arrows/vectors centered on a single point for a certain value of x,y and with a size corresponding to the tile. 
 				</p>
@@ -283,7 +283,7 @@ gl.drawArrays(...);
 				</canvas>
 				<p></p>
 				<p>
-					We can observe that the shader draws for each rasterized pixel of the geometry using the decided function for the vector field.
+					We can observe that the shader draws for each rasterized pixel of the geometry using the decided function for the vector fields.
 					Each "tile" is respected so that the vectors do not overlap. 
 				</p>
 				<br>

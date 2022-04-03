@@ -70,6 +70,13 @@ var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl) {
     
 	var positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
 	var resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
+	
+	var size = 2;          // 2 components per iteration
+	var type = gl.FLOAT;   // the data is 32bit floats
+	var normalize = false; // don't normalize the data
+	var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
+	var offset = 0;        // start at the beginning of the buffer
+
 
 	gl.vertexAttribPointer(
 		positionAttribLocation, // Attribute location
@@ -82,13 +89,9 @@ var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl) {
 
 	gl.enableVertexAttribArray(positionAttribLocation);
     
-	var size = 2;          // 2 components per iteration
-	var type = gl.FLOAT;   // the data is 32bit floats
-	var normalize = false; // don't normalize the data
-	var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
-	var offset = 0;        // start at the beginning of the buffer
-	gl.vertexAttribPointer(positionAttribLocation, size, type, normalize, stride, offset);
 
+	gl.vertexAttribPointer(positionAttribLocation, size, type, normalize, stride, offset);
+	
 	//
 	// Main render loop
 	//
@@ -98,6 +101,7 @@ var RunWebglContext = function (vertexShaderText, fragmentShaderText, gl) {
 
 	gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
 	gl.uniform2f(gl.getUniformLocation(program, "fragCoord"), gl.canvas.width, gl.canvas.height);
+
 
 	var primitiveType = gl.TRIANGLES;
 	var offset = 0;

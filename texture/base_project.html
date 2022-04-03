@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>WebGL - Interactive volume visualization of vector field</title>
+		<title>WebGL - Interactive volume visualization of vector fields</title>
 	</head>
 	<style>
 	
@@ -123,7 +123,7 @@
                 <header>
                     <h1>CHPS0941 IHPV</h1>
                     <p></p>
-                    <h2>Interactive volume visualization of vector field - Texture</h2>
+                    <h2>Interactive volume visualization of vector fields - Texture</h2>
                     <p>Project made by HOLLARD Lilian</p>
                 </header>
 				<strong><a href="../index.html">>_ Back to Part 1</a></strong>
@@ -140,7 +140,7 @@
 				<pre><code><strong>GLSL </strong>
 vec4 blur(sampler2D img, vec2 uv, vec2 resolution, vec2 direction){
 	vec4 res = vec4(0.0);
-	vec2 off1 = float * direction //direction corresponding to vector field
+	vec2 off1 = float * direction //direction corresponding to vector fields
 	color += texture(img, uv);
 	color += texture(img, uv + off1/resolution, [...]);		
 	//play with uv (which is gl_FragCoord.xy / iResolution.xy) and screen resolution
@@ -150,8 +150,8 @@ vec4 blur(sampler2D img, vec2 uv, vec2 resolution, vec2 direction){
 }
 </code></pre>
 			<br>
-			<p>We can now call this method via our vector field method already present in the fragmentShader 
-				in order to return a color corresponding to a blur directed by an existing vector in the <a class="arrow">F</a> function created by the vector field. </p>
+			<p>We can now call this method via our vector fields method already present in the fragmentShader 
+				in order to return a color corresponding to a blur directed by an existing vector in the <a class="arrow">F</a> function created by the vector fields. </p>
 
 			<h2>>_ Conclusion </h2>
 			<p>In order to best respond to the problem posed by this university project, I tried to take advantage of the interests of WebGL by creating this site in order to obtain 

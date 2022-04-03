@@ -6,7 +6,13 @@ Le code peut ainsi se lancer depuis un navigateur tel que firefox sans installat
 
 (Attention: génère une erreur d'analyse XML pour mauvaise syntaxe dans la console du navigateur).
 */
-
+var loadImage = function (url, callback) {
+	var image = new Image();
+	image.onload = function () {
+		callback(null, image);
+	};
+	image.src = url;
+};
 
 var loadTextResource = function (url, callback) {
 	var request = new XMLHttpRequest();
@@ -21,23 +27,14 @@ var loadTextResource = function (url, callback) {
 	request.send();
 };
 
+var load_Shader = function (gl, vertexPath, fragmentPath){
 
-/*
-Shaders loader
+ /* var image = new Image();
+    image.src = "https://LilianHollard.github.io/images/water.png";
+    image.onload = function(){
+        render(image);
+    }
 */
-var InitDemo = function () {
-    //WEBGL CONTEXT
-    /*
-    New: Webgl1 Support
-        - le projet se basant uniquement sur l'utilisation de shader, il existe 2 version permettant ainsi d'avoir la version 3.00 glsl es et 1.00
-        - La différence varie entre l'utilisation de in & out / varying & attribute / gl_FragCoord ...
-    */
-    var canvas = document.getElementById('vector_surface');
-    canvas.width = 1200;
-    canvas.height = 600;
-    var gl = canvas.getContext('webgl2'); 	
-    // In & out sont utilisé dans les shaders, nous avons besoin de webgl2 pour la version 3.00 de glsl es
-
     if (!gl) {
         console.log('WebGL 2 not supported, falling back on webgl 1');
         gl = canvas.getContext('webgl');
@@ -46,17 +43,17 @@ var InitDemo = function () {
         }else{
             //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\//
             /*Webgl 1 shader loading*/
-            loadTextResource('Shaders100/vertexShader.vs', function (vsErr, vsText) {
+            loadTextResource(vertexPath, function (vsErr, vsText) {
                 if (vsErr) {
                     alert('Fatal error getting vertex shader (see console)');
                     console.error(vsErr);
                 } else {
-                    loadTextResource('Shaders100/fragmentShader.fs', function (fsErr, fsText) {
+                    loadTextResource(fragmentPath, function (fsErr, fsText) {
                         if (fsErr) {
                             alert('Fatal error getting fragment shader (see console)');
                             console.error(fsErr);
                         }else{
-                            RunWebglContext(vsText, fsText, gl);
+                            RunWebglContext(vsText, fsText, gl);                    
                         }
                     });
                 } 
@@ -65,12 +62,12 @@ var InitDemo = function () {
     }else{
         //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\//
         /*Webgl 2 shader loading*/
-        loadTextResource('Shaders300/vertexShader.vs', function (vsErr, vsText) {
+        loadTextResource(vertexPath, function (vsErr, vsText) {
             if (vsErr) {
                 alert('Fatal error getting vertex shader (see console)');
                 console.error(vsErr);
             } else {
-                loadTextResource('Shaders300/fragmentShader.fs', function (fsErr, fsText) {
+                loadTextResource(fragmentPath, function (fsErr, fsText) {
                     if (fsErr) {
                         alert('Fatal error getting fragment shader (see console)');
                         console.error(fsErr);
@@ -82,4 +79,37 @@ var InitDemo = function () {
         });
 
     }
+}
+
+/*
+Shaders loader
+*/
+var InitDemo = function () {
+    //WEBGL CONTEXT
+    /*
+    New: Webgl1 Support
+        - le projet se basant uniquement sur l'utilisation de shader, il existe 2 version permettant ainsi d'avoir la version 3.00 glsl es et 1.00
+        - La différence varie entre l'utilisation de in & out / varying & attribute / gl_FragCoord ...
+    */
+
+    var canvas = document.getElementById('vector_surface');
+    canvas.width = 1200;
+    canvas.height = 600;
+    var gl = canvas.getContext('webgl2'); 	
+    load_Shader(gl, "Shaders300/vertexShader.vs", "Shaders300/fragmentShader.fs");
+
+    var canvas = document.getElementById('vector_surface_simple');
+    canvas.width = 1200;
+    canvas.height = 600;
+    gl = canvas.getContext('webgl2');
+    load_Shader(gl, "Shaders300/vertexShader.vs", "Shaders300/fragmentShader_simple.fs");
+
+    var canvas = document.getElementById('vector_surface_xy');
+    canvas.width = 1200;
+    canvas.height = 600;
+    gl = canvas.getContext('webgl2');
+    load_Shader(gl,"Shaders300/vertexShader.vs", "Shaders300/fragmentShader_simple_xy.fs");
+
+    // In & out sont utilisé dans les shaders, nous avons besoin de webgl2 pour la version 3.00 de glsl es
+
 }
